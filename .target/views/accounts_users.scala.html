@@ -1,0 +1,14 @@
+@(users: List[User])
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+@if(loggedInUser != null) {
+
+  @main("Welcome to Pacemaker") {
+    @dashboard_menu()
+    <h1 class="ui header"> Pacemaker Users </h1>
+    @accounts_searchUser()
+    @accounts_displayUsers(users)
+  }
+} else {
+    @accounts_login("Please log in first")
+}

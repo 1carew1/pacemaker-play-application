@@ -1,0 +1,18 @@
+2016-03-10 19:57:25,169 - [INFO] - from play in pool-4-thread-5 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2016-03-10 19:57:57,450 - [INFO] - from play in play-internal-execution-context-1 
+database [default] connected at jdbc:mysql://localhost:3306/pacemaker
+
+2016-03-10 19:57:58,124 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2016-03-10 19:58:03,233 - [INFO] - from application in play-akka.actor.default-dispatcher-2 
+Thu Mar 10 19:58:03 GMT 2016 Activity deleted for moe sizlack
+
+2016-03-10 19:58:05,034 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Thu Mar 10 19:58:05 GMT 2016 Activity deleted for moe sizlack
+
+2016-03-10 19:58:17,480 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Thu Mar 10 19:58:17 GMT 2016 moe sizlack added an activity
+

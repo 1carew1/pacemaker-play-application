@@ -1,0 +1,20 @@
+@(activityId: Long)
+
+  
+   <section class="ui raised segment">
+   <div class="ui grid">
+         <form action="/submitlocation/@activityId" method="POST">
+           <div class="field">
+             <label>Latitude</label>
+             <input type="long" placeholder="Lat eg: 52.246177" name="latitude">
+           </div>
+           <div class="field">
+             <label>Longitude</label>
+             <input type="long" placeholder="Lng eg: -7.140485" name="longitude">
+           </div>          
+           <button class="tiny ui green button" onclick="return confirm('If the latitude and longitude are not in the correct format then this location/route will not be added');"> Add location </button>
+         </form>
+   </div>
+ </section>
+
+

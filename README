@@ -1,0 +1,59 @@
+A user testing guide/ general guide to the application can be found in PDF format in the root of this project as : Pacemaker Web Testing.pdf
+
+Proof of the AWS instances can be found in the root of the play project : Pacemaker on AWS
+
+The main aspects focused on for this assignment were Deployment (AWS, EC2 + RDS), User Experience (Web applications) and Developer Experience (Console Application + Test Scripts, TDD, Test Doc, Java doc in doc folder)
+
+The DB can be reached via the following command:
+mysql -uwriter -ppacemaker -h pacemakerdb.chhhwpxruumu.eu-west-1.rds.amazonaws.com pacemaker
+Alternatively the connection url is pacemakerdb.chhhwpxruumu.eu-west-1.rds.amazonaws.com , user is writer and password is pacemaker and the database used is pacemaker
+
+The axis I have chosen to work on were, Deployment, User Experience and Developer Experience
+
+
+
+The Application :
+
+	http://pacemaker-939304930.eu-west-1.elb.amazonaws.com/
+	A user has been set up with email ‘c’ and password ‘c’. This was for testing purposes. Not other user on the web application can create an incorrect email.
+
+	The application is an activity logger with various features such as adding friends, a profile picture, creating an activity at a certain date, time, duration etc. It also has a feature that if a Latitude and Longitude are added to an activity then the activity will have a link to Google Maps in the Routes part of the activity.
+
+	The application is ran on the play framework and all code is written in Java or within the scala.html files.
+
+	The application can be accessed via mobile and all functionality is present however it is recommended that the phone is used in landscape mode as to get a better view of the application.
+
+
+Deployment:
+
+	Currently the app is deployed on AWS on 2 t2.micro EC2 instances with ssh access only being granted to those with the appropriate .pem file.
+
+	The app uses a MySQL version 5.6 which is an Amazon RDS instance. Currently it is set that the DB can be logged into from anywhere once the appropriate password and account are used. The reason why I chose anywhere was that for cost efficiency I did not generate any elastic IPs on AWS so each time the EC2 instance is started it will have a different IP address so I could not lock down the RDS instance to specific IPs.
+
+	The second EC2 instance was created via backing up the current instance as an AMI and then launching that AMI. Once created, an lsync process was setup between both of the servers' images/profilePhotos directories as this will ensure that when a profile photo is uploaded to one handler, then the other handler receives a copy. The reason for that is that each user's profile photo location is stored in the DB and if 2 application handlers are required then both servers will need the file.
+	A better solution would be to use AWS S3 storage as the storage of the profile photos as this would allow all non DB data to be in one place, however as this is a web application assignment I am taking the most minimal cost approach where possible.
+
+	When each of the two app handlers were set up an Elastic Load Balancer was set up so that AWS will handle the load balancing between the two handlers.
+
+	One large advantage of having everything on AWS is that the connection between the RDS instance and the EC2 instance is quite good. If the application and DB are ran from a localhost then any interactions with the DB are very quick so this setup allows the DB to be separate from the server running the application and the DB interactions to be very quick.
+
+	If this application was being production launched, a VPC other than the default would need to be created. Private and public subnets would then be created within the VPC and the RDS instance would be placed on the private subnet so that it would not have internet access and only machines within the VPC could access the RDS instance.
+
+
+User Experience:
+
+	A lot of the User Experience is gone through in the testing pdf Pacemaker Web Testing. 
+
+	The main approach taken to this was to have a web application where the user could not cause an error (aside from entering an address that doesn’t exist) or at least errors happen very rarely. The main thought process behind this is that user’s will not always fill out the right details in forms or may hit the wrong button and cause a blank or incomplete submission which can cause errors. Alternatively they can unintentionally delete items. As such lot of Quality Assurance testing went into the application to make sure that a user can navigate smoothly through the application without accidentally deleting an activity or causing an irreversible error.
+
+	Features such as profile photos, Google Maps Link for latitude and longitude, friends, privacy settings, changing password and editing their name and email were added. Although these are of course features, it was felt that these enrich the overall user experience via seeing what activities their friends are doing and giving more option and use to the application.
+
+Developer Experience:
+
+	Deploying on AWS is a convenient developer experience as it allows ease of backup and testing of a production environment without a serious commitment to hardware. Simply taking a backup AMI of a currently working production server/application can allow a developer to deploy a new instance of that server/application and make edits and improvements and test the changes without impacting production. This also allows the developer to use a more realistic development environment then solely developing on their local machine.
+
+	The CLI app may be a User Experience item but it is felt that is more of a developer tool as a User (Non technical person) would be more inclined to use an online application rather than a command line interface. Unfortunately there was a problem with how the Joda time was parsed to JSON and hence the command line interface can create activities but cannot create them with a date. Because of this the when the CLI is used to write or read from a file it only read and writes users rather than users and their activities.
+
+	Commenting and generation of Javadoc (which can be found in the route of the directory under doc) was a big part of the project (both the CLI and play app) as each method in every class as well as the class should have a short comment explaining it’s purpose/function.
+
+	Testing both TDD and Quality assurance was another part of the developer experience as the project should be relatively easily picked up again and have any outstanding errors worked upon. The Pacemaker Web Testing pdf should also give a run through of what the project should do and what errors it should catch when testing the application manually before release.

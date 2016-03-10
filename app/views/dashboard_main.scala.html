@@ -1,0 +1,61 @@
+@(activities: List[Activity])
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+@if(loggedInUser != null) {
+
+  @main("Dashboard") {
+
+
+
+    @dashboard_menu()
+
+    <section class="ui raised segment">
+      <div class="ui grid">
+        <aside class="four wide column">
+          <img src="@routes.Accounts.getImage(loggedInUser.profilePhoto)" class="ui medium image">
+        </aside>
+        <article class="twelve wide column">
+          <h3> <class="ui header"> Activities of @loggedInUser.firstname </h3>
+          <table class="ui celled table segment">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Distance (km)</th>
+                <th>Routes</th>
+                <th>Add a location</th>
+                <th>Delete the Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+    		      @for(i <- 0 until activities.size) {
+    		        <tr>
+                  <td> @activities(i).printTime()  </td> 
+                  <td> @activities(i).duration  </td> 
+    		          <td> @activities(i).kind </td> 
+                  <td> @activities(i).location </td> 
+                  <td> @activities(i).distance </td> 
+                  <td> @for(j <- 0 until activities(i).routes.size) { 
+                    <a class="item" target="_blank" href="http://maps.google.com/?q=@activities(i).routes(j).latitude,@activities(i).routes(j).longitude"> @activities(i).routes(j).toString()</a>
+                  } </td> 
+                  <td>@dashboard_uploadlocation(activities(i).id)</td>
+                  <td>@dashboard_deleteactivity(loggedInUser.id, activities(i).id)</td>
+    		        </tr>
+    		      }
+            </tbody>
+          </table>
+          <a class="item"  href="/upload"> <button class="medium ui button">
+              New Activity
+            </button> </a>
+           <a class="item"  href="/manageroutes"> <button class="medium ui button">
+              Manage Activity Routes
+            </button> </a>
+        </article>
+      </div>
+    </section>
+  }
+} else {
+    @accounts_login("Please log in first")
+}

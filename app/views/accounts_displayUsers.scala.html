@@ -1,0 +1,29 @@
+@(users: List[User])
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+<table class="ui table segment">
+   <thead>
+      <tr>
+         <th></th>
+         <th>First Name</th>
+         <th>Last Name</th>
+         <th>Email</th>
+         <th>Status</th>
+      </tr>
+   </thead>
+   <tbody>
+      @for(i <- 0 until users.size) {
+      @if(users(i).id != loggedInUser.id) {
+      <tr>
+         <td> <a href="/users/showuser/@users(i).id"> <img src="@routes.Accounts.getImage(users(i).profilePhoto)"class="ui small image"> </a> </td>
+         <td> @users(i).firstname </td>
+         <td> @users(i).lastname  </td>
+         <td> @users(i).email  </td>
+         <td> 
+            @accounts_determineIfFriends(loggedInUser.id, users(i).id)
+         </td>
+      </tr>
+      }
+      }
+   </tbody>
+</table>

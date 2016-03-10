@@ -1,0 +1,5 @@
+@(activityId: Long, routeId: Long)
+
+         <form action="/deleteroute/@activityId,@routeId" method="POST">
+            <button class="small ui red submit button" onclick="return confirm('Are you sure you want to delete this location?');"> DELETE </button>
+         </form>

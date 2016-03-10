@@ -1,0 +1,48 @@
+
+# Users
+users:
+
+    - !!models.User
+        email:      homer@simpson.com
+        firstname:  homer
+        lastname:   simpson        
+        password:   secret
+    
+    - !!models.User
+        email:      marge@simpson.com
+        firstname:  marge
+        lastname:   simpson        
+        password:   secret
+        
+
+    - !!models.User
+        email:      bart@simpson.com
+        firstname:  bart
+        lastname:   simpson        
+        password:   secret
+    
+    - !!models.User
+        email:      lisa@simpson.com
+        firstname:  lisa
+        lastname:   simpson        
+        password:   secret
+     
+     
+    - !!models.User
+        email:      maggie@simpson.com
+        firstname:  maggie
+        lastname:   simpson        
+        password:   secret
+        
+
+    - !!models.User
+        email:      milhouse@simpson.com
+        firstname:  milhouse
+        lastname:   van houten        
+        password:   secret
+    
+    - !!models.User
+        email:      c
+        firstname:  moe
+        lastname:   sizlack        
+        password:   c

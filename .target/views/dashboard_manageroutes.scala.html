@@ -1,0 +1,48 @@
+@()
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+@if(loggedInUser != null) {
+
+  @main("Manage Routes") {
+
+    @dashboard_menu()
+
+    <section class="ui raised segment">
+      <div class="ui grid">
+        <aside class="four wide column">
+          <img src="@routes.Assets.at("images/pacemaker.jpg")" class="ui medium image">
+        </aside>
+        <article class="six wide column">
+          <h3> <class="ui header"> List of Routes </h3>
+          <table class="ui celled table segment">
+          @for(i <- 0 until loggedInUser.activities.size) {
+            <thead>
+              <tr>
+                <th>Route/Location for @loggedInUser.activities(i).kind on @loggedInUser.activities(i).printTime() </th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+    		     @if(loggedInUser.activities(i).routes.size > 0) { 
+              @for(j <- 0 until loggedInUser.activities(i).routes.size) {
+    		        <tr>
+                  <td> <a class="item" target="_blank" href="http://maps.google.com/?q=@loggedInUser.activities(i).routes(j).latitude,@loggedInUser.activities(i).routes(j).longitude"> @loggedInUser.activities(i).routes(j).toString()</a> </td> 
+                  <td> @dashboard_deleteroute(loggedInUser.activities(i).id, loggedInUser.activities(i).routes(j).id) </td>
+    		       </tr>
+    		      }
+            } else {
+                <tr>
+                  <td> No routes for this activity yet </td> 
+                  <td> @dashboard_uploadlocation(loggedInUser.activities(i).id) </td>
+               </tr>
+          }
+            </tbody>
+          }
+          </table>
+        </article>
+      </div>
+    </section>
+  }
+} else {
+    @accounts_login("Please log in first")
+}

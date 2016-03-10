@@ -1,0 +1,67 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# UI
+
+GET     /                                          	controllers.Accounts.index()
+GET     /signup                                    	controllers.Accounts.signup()
+GET     /login                                     	controllers.Accounts.login()
+GET     /users                                     	controllers.Accounts.users()
+GET     /users/showuser/:id                        	controllers.Accounts.showUser(id : Long)
+GET     /logout                                    	controllers.Accounts.logout()
+GET     /friends                                   	controllers.Accounts.friends()
+POST    /register                                  	controllers.Accounts.register()
+POST    /edituser                                  	controllers.Accounts.editUser()
+GET     /edituserform                              	controllers.Accounts.editUserForm()
+POST    /authenticate                              	controllers.Accounts.authenticate()
+POST	/changepassword								controllers.Accounts.changePassword()
+POST	/uploadphoto								controllers.Accounts.upload()
+POST	/deleteprofilephoto							controllers.Accounts.deleteProfilePhoto()
+POST    /addfriend/:friendId             			controllers.Accounts.addFriend(friendId : Long)
+POST    /acceptfriend/:friendId             		controllers.Accounts.acceptFriend(friendId : Long)
+POST    /unfriend/:friendId             			controllers.Accounts.unfriend(friendId : Long)
+POST    /searchuser			             			controllers.Accounts.searchUser()
+
+GET     /usersettings                              	controllers.Dashboard.userSettings()
+GET     /dashboard                                 	controllers.Dashboard.index()
+GET     /manageroutes                               controllers.Dashboard.manageRoutes()
+GET     /upload                                    	controllers.Dashboard.uploadActivityForm()
+POST    /submitactivity                            	controllers.Dashboard.submitActivity()
+POST    /deleteactivity/:userId,:activityId        	controllers.Dashboard.deleteActivity(userId: Long, activityId: Long)
+POST    /deleteroute/:activityId,:routeId        	controllers.Dashboard.deleteRoute(activityId: Long, routeId: Long)
+POST    /deleteuser						        	controllers.Accounts.deleteUser()
+
+#GET     /uploadlocation                          controllers.Dashboard.uploadLocationForm()
+POST    /submitlocation/:activityId               controllers.Dashboard.submitLocation(activityId: Long)
+POST    /submitsettings			               	  controllers.Dashboard.submitSettings()
+
+# API
+
+GET     /api/users                                 controllers.PacemakerAPI.users()
+DELETE  /api/users                                 controllers.PacemakerAPI.deleteAllUsers()
+POST    /api/users                                 controllers.PacemakerAPI.createUser()
+
+GET    /api/users/:id                              controllers.PacemakerAPI.user(id: Long)
+DELETE /api/users/:id                              controllers.PacemakerAPI.deleteUser(id: Long)
+PUT    /api/users/:id                              controllers.PacemakerAPI.updateUser(id: Long)
+
+GET     /api/users/:userId/activities              controllers.PacemakerAPI.activities(userId: Long)
+POST    /api/users/:userId/activities              controllers.PacemakerAPI.createActivity(userId: Long)
+
+GET     /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.activity(userId: Long, activityId:Long)
+DELETE  /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.deleteActivity(userId: Long, activityId:Long)
+PUT     /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.updateActivity(userId: Long, activityId:Long)
+
+GET     /api/users/:userId/activities/:activityId/routes              controllers.PacemakerAPI.locations(userId: Long, activityId: Long)
+POST    /api/users/:userId/activities/:activityId/routes              controllers.PacemakerAPI.createLocation(userId: Long, activityId: Long)
+GET     /api/users/:userId/activities/:activityId/routes/:locationId  controllers.PacemakerAPI.location(userId: Long, activityId:Long, locationId: Long)
+DELETE  /api/users/:userId/activities/:activityId/routes/:locationId  controllers.PacemakerAPI.deleteLocation(userId: Long, activityId:Long, locationId: Long)
+PUT     /api/users/:userId/activities/:activityId/routes/:locationId  controllers.PacemakerAPI.updateLocation(userId: Long, activityId:Long, locationId: Long)
+
+
+
+GET		/getPicture/:filename		controllers.Accounts.getImage(filename: String)
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+

@@ -1,0 +1,18 @@
+@(userId: Long, friendId: Long)
+@friendAdded = @{Friends.findById(userId, friendId)}
+@friendAddedYou = @{Friends.findById(friendId, userId)}
+
+
+@main("Welcome to Pacemaker") {
+  @{if(friendAdded != null && friendAddedYou != null) {
+		accounts_unfriend(friendId)
+	} else if(friendAdded != null && friendAdded.accepted.equals("No"))  {
+		"Pending"
+	} else if(friendAddedYou != null && friendAddedYou.accepted.equals("No"))  {
+		accounts_acceptFriend(friendId)
+	} else {
+		accounts_addfriend(friendId)
+	}
+	
+  }
+}

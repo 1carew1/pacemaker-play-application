@@ -1,0 +1,65 @@
+@(errorMessage: String)
+
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+
+@if(loggedInUser != null) {
+
+  @main("User Settings") {
+    @dashboard_menu()
+
+      <section class="ui raised segment">
+      <div class="ui grid">
+        <aside class="six wide column">
+          <img src="@routes.Accounts.getImage(loggedInUser.profilePhoto)" class="ui medium image">
+          <div>
+
+          <form action="/uploadphoto" method="POST" enctype="multipart/form-data">
+              
+              <input type="file" name="picture">
+              <p>
+                  <input type="Submit">
+              </p>
+          </form>
+            <input type="file" id="file" style="display:none">
+         <br>
+         <form action="/deleteprofilephoto" method="POST">
+            <button class="tiny ui red submit button" onclick="return confirm('Are you sure you want to delete this photo? Note you cannot delete the default picture!');"> Delete Photo </button>
+         </form>
+
+
+          </div>
+        </aside>
+        <article class="six wide column">
+          <h3> <class="ui header"> Settings </h3>
+          <form action="/submitsettings" method="POST">
+          	 <div class="ui checkbox">
+                  <input type="checkbox" name="public" id="public" @if(loggedInUser.isPublicViewable){checked="true"}>
+                  <label for="public">Make my activites public visible</label>
+              </div>
+              <br>
+              <div class="ui checkbox">
+                  <input type="checkbox" name="friends" id="friends" @if(loggedInUser.isFriendViewable || loggedInUser.isPublicViewable){checked="true"}>
+                  <label for="friends">Make my activites friend visible</label> 
+              </div>
+              <p>Please note that if your activities are viewable publically, they are viewable to your friends.</p>
+              <button class="small ui blue submit button"> Save Settings </button>
+           </form>
+            @accounts_changepassword()
+            <p>@errorMessage</p>
+
+            <h3> <class="ui header"> Edit or Delete Account </h3>
+           <div class="ui small buttons">
+              <a class="item" href="/edituserform"> <button class="ui green submit button">  Edit User Details  </button> </a>
+              <div class="or"></div>
+              <form action="/deleteuser" method="POST">
+                <button class="ui red submit button" onclick="return confirm('Are you sure? Your data will not be recoverable');"> Delete your account </button>
+              </form>
+          </div>
+        </article>
+      </div>
+    </section>
+  }
+} else {
+    @accounts_login("Please log in first")
+}

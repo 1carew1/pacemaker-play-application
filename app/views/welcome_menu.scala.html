@@ -1,0 +1,10 @@
+@()
+
+<nav class="ui black inverted menu">
+  <div class="header item"> <a href="/"> Home </a> </div>
+  <div class="right menu">
+  	<a class="item" @if(session().get("email") != null) { href="/dashboard" } else { href="/login" }> My Dashboard</a>
+    @if(User.findByEmail(session().get("email")) == null) { <a class="item" href="/signup"> Signup</a> }
+    <a class="item" @if(User.findByEmail(session().get("email")) != null) {href="/logout"} else {href="/login"}>  Login/Logout</a>
+  </div>
+</nav>    

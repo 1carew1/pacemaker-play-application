@@ -1,0 +1,28 @@
+@(pendingFriends: List[User], friends: List[User])
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+@if(loggedInUser != null) {
+
+  @main("Friends") {
+    @dashboard_menu()
+
+    <h1 class="ui header"> Friends List </h1>
+
+    <h3 class="ui header"> Pending Friends </h3>
+    @if(pendingFriends.isEmpty()) {
+      <p>No Pending Friends</p>
+    } else {
+      @accounts_displayUsers(pendingFriends)
+    }
+
+    <h3 class="ui header"> Friends </h3>
+    @if(friends.isEmpty()) {
+      <p>You have no accepted friends yet</p>
+    } else {
+      @accounts_displayUsers(friends)
+    }
+  }
+
+} else {
+    @accounts_login("Please log in first")
+}

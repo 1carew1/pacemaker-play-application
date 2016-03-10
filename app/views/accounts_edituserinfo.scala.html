@@ -1,0 +1,43 @@
+@(errorMessage: String)
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+
+@if(loggedInUser != null) {
+
+  @main("Welcome to Pacemaker") {
+    @dashboard_menu()
+
+  <section class="ui raised segment">
+    <div class="ui grid">
+      <div class="ui ten wide column">
+        <div class="ui stacked fluid form segment">
+          <p><i>Please note if you change your email you will be logged out and need to log back in with new email</i></p>
+          <form action="/edituser" method="POST">
+            <h3 class="ui header">Edit your details</h3>
+            <div class="three fields">
+              <div class="field">
+                <label>First Name</label>
+                <input placeholder="@loggedInUser.firstname" type="text" name="firstname">
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                <input placeholder="@loggedInUser.lastname" type="text" name="lastname">
+              </div>
+            <div class="field">
+              <label>Email</label>
+              <input placeholder="@loggedInUser.email" type="email" name="email">
+            </div>
+          </div>
+            <button class="ui blue submit button">Save Settings</button>
+          </form>
+        </div>  
+      </div>
+      <aside class="ui five wide column">
+        <img src="@routes.Assets.at("images/pacemaker.jpg")" class="ui medium image">
+      </aside>
+    </div>
+  </section>
+  }
+} else {
+    @accounts_login("Please log in first")
+}

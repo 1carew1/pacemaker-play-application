@@ -1,0 +1,5 @@
+@(userId: Long, activityId: Long)
+
+         <form action="/deleteactivity/@userId,@activityId" method="POST">
+            <button class="ui red submit button" onclick="return confirm('Are you sure you want to delete this activity?');"> DELETE Activity </button>
+         </form>

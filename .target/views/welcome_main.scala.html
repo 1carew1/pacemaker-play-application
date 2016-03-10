@@ -1,0 +1,47 @@
+@(mostRecentActivity: String)
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+
+@main("Welcome to Pacemaker") {
+  @welcome_menu()
+    
+<section class="ui raised segment">
+  <div class="ui grid">
+    <aside class="six wide column">
+      <img src="@routes.Assets.at("images/pacemaker.jpg")" class="ui medium image">
+    </aside>
+    <article class="ten wide column">
+      @if(loggedInUser != null) {
+        <h1 class="ui  header"> You are logged in as @loggedInUser.firstname @loggedInUser.lastname</h1>
+        <p> <a class="item" @if(session().get("email") != null) { href="/dashboard" } else { href="/login" }> My Dashboard</a></p>
+      } else {
+        <h1 class="ui  header"> Sign up/Login to Pacemaker  </h1>
+        <p>Where will you go?</p>
+      }
+      <p>Pacemaker is a Web application running on the play framework with CSS styling from Sematnic UI</p>
+
+      <p>The purpose of this application is to keep track of a user's activities. Currently a user can <a 
+        class="item" @if(session().get("email") != null) { href="/upload" } else { href="/login" }> create 
+        an activity</a>  by giving the activity's Date, Time, Duration, Type (Run, Walk, Go grocery shopping
+         etc.) The location at which it is taking place (e.g. meeting at the bank) and the distance at which
+          the activity will last or the distance to where the activity is. Once an activity is created it 
+          can be viewed from the user's <a class="item" @if(session().get("email") != null) { href="/dashboard" } else { href="/login" }>Dashboard</a>. From the Dashboard the user can add a location
+           (latitude and longitude) to an activity. A user can add multiple locations to an activity and
+            this is the Route part of the activity. When the latitiude and longitude are added, they should
+             be clickable and bring the user to the location of the latitude and longitude on 
+             <a class="item" href="https://www.google.ie/maps" target="_blank">Google Maps</a>.</p>
+
+    </article>
+  </div>
+</section>
+
+<section class="ui raised segment">
+  <div class="ui grid">
+    <article class="ten wide column">
+      <h1 class="ui  header"> Most Recent Activity  </h1>
+      <p>@mostRecentActivity</p>
+    </article>
+  </div>
+</section>
+    
+    
+}

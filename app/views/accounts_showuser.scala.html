@@ -1,0 +1,66 @@
+@(user : User)
+@loggedInUser = @{User.findByEmail(session().get("email"))}
+@areWeFriends = @{Friends.findById(user.id, loggedInUser.id)}
+
+
+@if(loggedInUser != null) {
+  @main("Pacemaker") {
+    @dashboard_menu()
+    
+  <section class="ui raised segment">
+    <div class="ui grid">
+        <aside class="four wide column">
+          <h1 class="ui header">@user.firstname @user.lastname</h1>
+          <img src="@routes.Accounts.getImage(user.profilePhoto)" class="ui medium image">
+        </aside>
+    <article class="six wide column">
+      <table class="ui table segment">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td> @user.id</td> <td> @user.firstname</td> <td> @user.lastname </td>  <td> @user.email </td> 
+            </tr>
+        </tbody>
+     </table>
+     @if((user.isPublicViewable || (areWeFriends != null && areWeFriends.accepted.equals("Yes") && user.isFriendViewable) )&& user.activities.size > 0) {
+          <table class="ui celled table segment">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Distance</th>
+                <th>Routes</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for(i <- 0 until user.activities.size) {
+                <tr>
+                  <td> @user.activities(i).printTime()  </td> 
+                  <td> @user.activities(i).duration  </td> 
+                  <td> @user.activities(i).kind </td> 
+                  <td> @user.activities(i).location </td> 
+                  <td> @user.activities(i).distance </td> 
+                  <td> @for(j <- 0 until user.activities(i).routes.size) { 
+                    <a class="item" target="_blank" href="http://maps.google.com/?q=@user.activities(i).routes(j).latitude,@user.activities(i).routes(j).longitude"> @user.activities(i).routes(j).toString()</a>
+                  } </td> 
+                </tr>
+              }
+            </tbody>
+          </table>
+      }
+    </article>
+   </div>
+  </section>
+  }
+} else {
+    @accounts_login("Please log in first")
+}

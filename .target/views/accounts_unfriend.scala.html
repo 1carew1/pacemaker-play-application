@@ -1,0 +1,5 @@
+@(friendId: Long)
+
+         <form action="/unfriend/@friendId" method="POST">
+            <button class="small ui red submit button" onclick="return confirm('Are you sure you want to stop being friends?');"><i class="remove user icon"></i> Unfriend </button>
+         </form>

@@ -1,0 +1,5 @@
+Currently the project may be set up for development or production
+The main change that needs to be made is in USerUtils.java - comment out one of the largeParth Strings depending on whether you want production or development.
+
+If you wish to change the DB you will need to change it in both the application.conf file and 
+in the MySQLConnection.java class
