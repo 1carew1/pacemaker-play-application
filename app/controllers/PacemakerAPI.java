@@ -228,9 +228,12 @@ public class PacemakerAPI extends Controller {
 		} else {
 			if (user.activities.contains(activity)) {
 				Activity updatedActivity = renderActivity(request().body().asJson().toString());
+				Logger.info(new Date() + updatedActivity.toString());
 				activity.distance = updatedActivity.distance;
 				activity.location = updatedActivity.location;
 				activity.kind = updatedActivity.kind;
+				activity.startTime = updatedActivity.startTime;
+				activity.duration = updatedActivity.duration;
 				Logger.info(new Date() + " User " + user.firstname + " " + user.lastname + " updated an activity");
 				activity.save();
 				result = ok(renderActivity(updatedActivity));
