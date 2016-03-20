@@ -49,6 +49,11 @@ PUT    /api/users/:id                              controllers.PacemakerAPI.upda
 GET     /api/users/:userId/activities              controllers.PacemakerAPI.activities(userId: Long)
 POST    /api/users/:userId/activities              controllers.PacemakerAPI.createActivity(userId: Long)
 
+# Friends
+GET     /api/users/:userId/friends              	controllers.PacemakerAPI.getFriends(userId: Long)
+POST    /api/users/:userId/friends/:friendId      	controllers.PacemakerAPI.addFriend(userId: Long, friendId:Long)
+DELETE  /api/users/:userId/friends/:friendId   		controllers.PacemakerAPI.deleteFriend(userId: Long, friendId:Long)
+
 GET     /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.activity(userId: Long, activityId:Long)
 DELETE  /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.deleteActivity(userId: Long, activityId:Long)
 PUT     /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.updateActivity(userId: Long, activityId:Long)

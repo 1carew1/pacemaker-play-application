@@ -17,6 +17,7 @@ public class JsonParser {
 	private static JSONSerializer userSerializer = new JSONSerializer().exclude("class");
 	private static JSONSerializer activitySerializer = new JSONSerializer().exclude("class");
 	private static JSONSerializer locationSerializer = new JSONSerializer().exclude("class");
+	private static JSONSerializer friendsSerializer = new JSONSerializer().exclude("class");
 	
 	/**
 	 * Return a user from a json string
@@ -92,6 +93,7 @@ public class JsonParser {
 		return locationSerializer.serialize(obj);
 	}
 	
+	
 	/**
 	 * Create a list of Location objects from a json string
 	 * @param json
@@ -99,5 +101,23 @@ public class JsonParser {
 	 */
 	public static List<Location> renderLocations(String json) {
 		return new JSONDeserializer<ArrayList<Location>>().use("values", Location.class).deserialize(json);
+	}
+	
+	/**
+	 * Generate json string from a list of users object
+	 * @param obj
+	 * @return
+	 */
+	public static String renderFriends(Object obj) {
+		return friendsSerializer.serialize(obj);
+	}
+	
+	/**
+	 * Generate json string from a list a friend
+	 * @param obj
+	 * @return
+	 */
+	public static String renderFriend(Object obj) {
+		return friendsSerializer.serialize(obj);
 	}
 }

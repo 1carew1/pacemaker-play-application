@@ -14,14 +14,16 @@ import play.mvc.Http.MultipartFormData.FilePart;
 
 public class UserUtils {
 
-	//TODO Alaways remember to change largePath string in when changing to AWS
-	
+	// TODO Alaways remember to change largePath string in when changing to AWS
+
 	// Change largepath string depending on environment
-	 //public static String largepath = "/Users/colmcarew/Documents/workspace/pacemaker-web-app-play/public/";
-	//public static String largepath = "/home/ubuntu/playprojects/pacemaker-web-app-play/public/";
-//	public static String largepath = "/home/colm/Documents/pacemaker-web-app-play/public/";
+	// public static String largepath =
+	// "/Users/colmcarew/Documents/workspace/pacemaker-web-app-play/public/";
+	// public static String largepath =
+	// "/home/ubuntu/playprojects/pacemaker-web-app-play/public/";
+	// public static String largepath =
+	// "/home/colm/Documents/pacemaker-web-app-play/public/";
 	public static String largepath = "/home/appfiles/pacemaker/";
-	
 
 	/**
 	 * Method to delete a photo given its relative location
@@ -70,13 +72,16 @@ public class UserUtils {
 	 * @param userId
 	 * @param friendId
 	 */
-	public static void unfriend(Long userId, Long friendId) {
+	public static String unfriend(Long userId, Long friendId) {
 		Friends yourFriendEntry = Friends.findById(userId, friendId);
 		Friends theirFriendEntry = Friends.findById(friendId, userId);
+		String result = "Not Deleted";
 		if (yourFriendEntry != null && theirFriendEntry != null && yourFriendEntry.accepted.equals("Yes")) {
 			yourFriendEntry.delete();
 			theirFriendEntry.delete();
+			result = "Deleted";
 		}
+		return result;
 	}
 
 	/**
@@ -100,12 +105,14 @@ public class UserUtils {
 	 * @param userId
 	 * @param friendId
 	 */
-	public static void addFriend(Long userId, Long friendId) {
+	public static Friends addFriend(Long userId, Long friendId) {
 		Friends alreadyThere = Friends.findById(userId, friendId);
+		Friends f = null;
 		if (alreadyThere == null) {
-			Friends f = new Friends(userId, friendId);
+			f = new Friends(userId, friendId);
 			f.save();
 		}
+		return f;
 
 	}
 
@@ -147,17 +154,32 @@ public class UserUtils {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Method used to get an image file
+	 * 
 	 * @param filename
 	 * @return
 	 */
 	public static File getImage(String filename) {
 		File file = new File(largepath + filename);
-		if(!file.exists()) {
+		if (!file.exists()) {
 			file = new File(largepath + "images/profilePhotos/default.jpg");
 		}
 		return file;
+	}
+
+	/**
+	 * Method used to get all friends
+	 * 
+	 * @param filename
+	 * @return
+	 */
+	public static List<Friends> getFriends(Long userId) {
+		List<Friends> friends = new ArrayList<>();
+		friends.addAll(Friends.findAllPendingFriendsThatYouAdded(userId));
+		friends.addAll(Friends.findAllPendingFriendsThatAddedYou(userId));
+		friends.addAll(Friends.findAllAcceptedFriends(userId));
+		return friends;
 	}
 }

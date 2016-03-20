@@ -2,7 +2,7 @@ package controllers;
 
 import static parsers.JsonParser.renderActivity;
 import static parsers.JsonParser.renderLocation;
-import static parsers.JsonParser.renderUser;
+import static parsers.JsonParser.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,11 +11,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import models.Activity;
+import models.Friends;
 import models.Location;
 import models.User;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.UserUtils;
 /**
  * Controller used for mostly interacting with the CLI tool 
  * @author colmcarew
@@ -375,4 +377,38 @@ public class PacemakerAPI extends Controller {
 		}
 		return ok(renderLocation(routes));
 	}
+	
+	/**
+	 * Method to get all friends
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result getFriends(Long userId) {
+		List<Friends> friends =  UserUtils.getFriends(userId);
+		return ok(renderFriend(friends));
+	}
+	
+	/**
+	 * Method to add a friend
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result addFriend(Long userId, Long friendId) {
+		Friends f = utils.UserUtils.addFriend(userId, friendId);
+		return ok(renderFriend(f));
+	}
+	
+	/**
+	 * Method to delete a friend
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result deleteFriend(Long userId, Long friendId) {
+		String result = utils.UserUtils.unfriend(userId, friendId);
+		return ok(result);
+	}
+	
 }

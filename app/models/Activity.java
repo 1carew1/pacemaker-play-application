@@ -40,7 +40,7 @@ public class Activity extends Model {
 	public String duration;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	public List<Location> routes = new ArrayList<Location>();
+	public List<Location> routes = new ArrayList<>();
 	
 	
 	/**
