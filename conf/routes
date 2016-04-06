@@ -52,7 +52,11 @@ POST    /api/users/:userId/activities              controllers.PacemakerAPI.crea
 # Friends
 GET     /api/users/:userId/friends              	controllers.PacemakerAPI.getFriends(userId: Long)
 POST    /api/users/:userId/friends/:friendId      	controllers.PacemakerAPI.addFriend(userId: Long, friendId:Long)
-DELETE  /api/users/:userId/friends/:friendId   		controllers.PacemakerAPI.deleteFriend(userId: Long, friendId:Long)
+DELETE    /api/users/:userId/friends/:friendId   	controllers.PacemakerAPI.deleteFriend(userId: Long, friendId:Long)
+
+GET     /api/users/:userId/friendsWhoAddedMe       	controllers.PacemakerAPI.getFriendsThatAddedMe(userId: Long)
+GET     /api/users/:userId/friendsWhoIAdded       	controllers.PacemakerAPI.getFriendsThatIAdded(userId: Long)
+POST    /api/users/:userId/acceptFriend/:friendId   controllers.PacemakerAPI.acceptFriend(userId: Long, friendId:Long)
 
 GET     /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.activity(userId: Long, activityId:Long)
 DELETE  /api/users/:userId/activities/:activityId  controllers.PacemakerAPI.deleteActivity(userId: Long, activityId:Long)
@@ -66,7 +70,8 @@ PUT     /api/users/:userId/activities/:activityId/routes/:locationId  controller
 
 
 
-GET		/getPicture/:filename		controllers.Accounts.getImage(filename: String)
+GET		/getPicture/:filename						controllers.Accounts.getImage(filename: String)
+GET 	/getPicture/images/profilePhotos/:filename 	controllers.Accounts.getImageWithImageNameOnly(filename: String)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

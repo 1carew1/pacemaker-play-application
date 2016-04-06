@@ -90,13 +90,14 @@ public class UserUtils {
 	 * @param userId
 	 * @param friendId
 	 */
-	public static void acceptFriend(Long userId, Long friendId) {
+	public static Friends acceptFriend(Long userId, Long friendId) {
 		Friends alreadyThere = Friends.findById(friendId, userId);
 		alreadyThere.accepted = "Yes";
 		Friends f = new Friends(userId, friendId);
 		f.accepted = "Yes";
 		f.save();
 		alreadyThere.save();
+		return f;
 	}
 
 	/**
@@ -163,6 +164,20 @@ public class UserUtils {
 	 */
 	public static File getImage(String filename) {
 		File file = new File(largepath + filename);
+		if (!file.exists()) {
+			file = new File(largepath + "images/profilePhotos/default.jpg");
+		}
+		return file;
+	}
+	
+	/**
+	 * Method used to get an image file
+	 * 
+	 * @param filename
+	 * @return
+	 */
+	public static File getImageWithImageNameOnly(String filename) {
+		File file = new File(largepath + "images/profilePhotos/" + filename);
 		if (!file.exists()) {
 			file = new File(largepath + "images/profilePhotos/default.jpg");
 		}

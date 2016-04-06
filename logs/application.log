@@ -1,12 +1,21 @@
-2016-03-20 12:20:38,714 - [INFO] - from play in pool-4-thread-1 
+2016-04-06 19:56:07,383 - [INFO] - from play in pool-4-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2016-03-20 12:20:50,557 - [INFO] - from play in play-internal-execution-context-1 
+2016-04-06 19:56:56,700 - [INFO] - from play in play-internal-execution-context-1 
 database [default] connected at jdbc:mysql://pacemaker:3306/pacemaker
 
-2016-03-20 12:20:51,106 - [INFO] - from play in play-internal-execution-context-1 
+2016-04-06 19:56:57,412 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2016-03-20 12:21:00,690 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
-Sun Mar 20 12:21:00 GMT 2016 moe sizlack has logged in
+2016-04-06 19:58:42,568 - [INFO] - from application in play-akka.actor.default-dispatcher-14 
+Wed Apr 06 19:58:42 IST 2016 bart simpson has logged in
+
+2016-04-06 19:59:06,974 - [INFO] - from application in play-akka.actor.default-dispatcher-19 
+Wed Apr 06 19:59:06 IST 2016 moe sizlack has logged in
+
+2016-04-06 20:08:29,162 - [INFO] - from play in play-internal-execution-context-2 
+database [default] connected at jdbc:mysql://pacemaker:3306/pacemaker
+
+2016-04-06 20:08:29,345 - [INFO] - from play in play-internal-execution-context-2 
+Application started (Dev)
 

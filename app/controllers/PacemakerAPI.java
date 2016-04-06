@@ -390,6 +390,28 @@ public class PacemakerAPI extends Controller {
 	}
 	
 	/**
+	 * Method to get all friends who added you but not accepted
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result getFriendsThatAddedMe(Long userId) {
+		List<Friends> friends =  Friends.findAllPendingFriendsThatAddedYou(userId);
+		return ok(renderFriend(friends));
+	}
+	
+	/**
+	 * Method to get all friends who you added but not accepted
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result getFriendsThatIAdded(Long userId) {
+		List<Friends> friends =  Friends.findAllPendingFriendsThatYouAdded(userId);
+		return ok(renderFriend(friends));
+	}
+	
+	/**
 	 * Method to add a friend
 	 * 
 	 * @param userId
@@ -397,7 +419,20 @@ public class PacemakerAPI extends Controller {
 	 */
 	public static Result addFriend(Long userId, Long friendId) {
 		Friends f = utils.UserUtils.addFriend(userId, friendId);
-		return ok(renderFriend(f));
+		User dummy = new User();
+		return ok(renderUser(dummy));
+	}
+	
+	/**
+	 * Method to accept a friend
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static Result acceptFriend(Long userId, Long friendId) {
+		Friends f = utils.UserUtils.acceptFriend(userId, friendId);
+		User dummy = new User();
+		return ok(renderUser(dummy));
 	}
 	
 	/**

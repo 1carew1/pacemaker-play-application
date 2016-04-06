@@ -435,4 +435,21 @@ public class Accounts extends Controller {
 		}
 		return result;
 	}
+	
+	/**
+	 * Method used to return a image to the user
+	 * 
+	 * @param filename
+	 * @return
+	 */
+	public static Result getImageWithImageNameOnly(String filename) {
+		Result result = null;
+		File file = utils.UserUtils.getImageWithImageNameOnly(filename);
+		if (file.exists()) {
+			result = ok(file);
+		} else {
+			result = badRequest();
+		}
+		return result;
+	}
 }
