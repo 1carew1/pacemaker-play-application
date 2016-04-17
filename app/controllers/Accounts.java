@@ -452,4 +452,35 @@ public class Accounts extends Controller {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * This method is used to upload a profile photo for a user via REST
+	 * 
+	 * @return
+	 */
+	public static Result uploadUserProfilePhotoViaPost(Long userId) {
+		Result result = ok();
+		User user = User.findById(userId);
+		MultipartFormData body = request().body().asMultipartFormData();
+		String isThereAnything = request().remoteAddress();
+		Logger.info(new Date() + " Getting new profile photo");
+		Logger.info(new Date() + " " + isThereAnything);
+//		FilePart picture = body.getFile("picture");
+//		if (picture != null) {
+//			String fileName = picture.getFilename();
+//			if (fileName.matches(".+?\\.(png|jpg|jpeg|gif)")) {
+//				utils.UserUtils.uploadPictue(user, fileName, picture);
+//				result = redirect(routes.Dashboard.userSettings());
+//			} else {
+//				Logger.info(new Date() + " File format not supported");
+//				result = ok(dashboard_settings.render("This type of image is not supported"));
+//			}
+//
+//		} else {
+//			Logger.info(new Date() + " Picture was null");
+//			result = redirect(routes.Dashboard.userSettings());
+//		}
+		return result;
+	}
 }

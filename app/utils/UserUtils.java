@@ -128,6 +128,7 @@ public class UserUtils {
 		String oldProfilePhoto = user.profilePhoto;
 		fileName = user.firstname + user.lastname + user.id + "_profilephoto_"
 				+ fileName.replace(".+?\\.(png|jpg|jpeg|gif)", "\\1");
+		fileName = fileName.replaceAll("\\s+", "");
 		File file = picture.getFile();
 		Logger.info(new Date() + " deleting " + user.firstname + " " + user.lastname + "'s old profile photo");
 		deletePhoto(oldProfilePhoto);
